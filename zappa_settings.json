@@ -1,0 +1,10 @@
+{
+    "dev": {
+        "aws_region": "ap-south-1",
+        "django_settings": "sample_project.settings",
+        "profile_name": "default",
+        "project_name": "sample-project",
+        "runtime": "python3.10",
+        "s3_bucket": "zappa-p01ygdhxw"
+    }
+}
