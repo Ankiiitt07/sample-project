@@ -1,0 +1,43 @@
+name: Deploy to dev Server - AWS Lambda.
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-django-serverless:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.9
+      - name: Setting up AWS Credentials
+        run: |
+          pip install awscli
+          aws configure set region ap-south-1
+          aws configure set output json
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY }} 
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_KEY }}
+      - name: Create virtual env with Python3.9
+        run: |
+          pip install virtualenv
+          python3.9 -m virtualenv env
+      - name: Install Requirements
+        run: |
+          . env/bin/activate
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          deactivate
+      - name: Install Zappa
+        run: |
+          . env/bin/activate
+          pip install zappa
+          deactivate
+          
+      - name: Update Django application using zappa
+        run: |
+          . env/bin/activate
+          zappa update dev
+          deactivate
