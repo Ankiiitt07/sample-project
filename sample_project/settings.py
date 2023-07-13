@@ -28,8 +28,8 @@ SECRET_KEY = 'django-insecure-ll$hhebsv%93zj66u3tiij-zbn_+ts3a7g363s!py*n&gz=^%)
 # DEBUG = True
 DEBUG = False
 
-ALLOWED_HOSTS = ['hivfccfiu2.execute-api.ap-south-1.amazonaws.com','127.0.0.1']
-
+ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = ['https://hivfccfiu2.execute-api.ap-south-1.amazonaws.com/dev']
 
 # Application definition
 

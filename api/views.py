@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
+from rest_framework.decorators import api_view
 
 # Create your views here.
 def welcome(response):
@@ -8,12 +9,17 @@ def welcome(response):
 def login(request):
     return render(request, 'login.html')
 
+@api_view(["POST"])
 def authentication(request):
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
         if (email == "ankit@wethink.co.in" and password == "123456"):
-            return HttpResponse("Success")
+            output = {
+                "status" : "Success",
+                "message" : "Successfully logged In"
+            }
+            return JsonResponse(output, status=200)
         else:
             error_email = []
             items = {
